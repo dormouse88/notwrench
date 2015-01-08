@@ -135,6 +135,7 @@ void Box::LoadRoute(lua_State * L)
 						lua_pushinteger(L, 2);//mn
 						lua_gettable(L, -2);
 						cD.value.b = lua_tonumber(L, -1);
+						cD.value.g = lua_tonumber(L, -1);  //this line makes blue into cyan
 						lua_pop(L,1);
 					}
 				}

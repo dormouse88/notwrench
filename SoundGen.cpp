@@ -17,9 +17,11 @@ SoundGen::SoundGen()
 }
 //SoundGen::~SoundGen() {}
 
-void SoundGen::SetCallbacks(std::function<float()> f)
+void SoundGen::SetCallbacks(std::function<float()> eng, std::function<float()> hea, std::function<int()> lev)
 {
-    getModelData = f;
+    getEngine = eng;
+    getHealth = hea;
+    getLevel = lev;
     
     unsigned int channelCount = 1;
     unsigned int sampleRate = 44100;
@@ -28,27 +30,55 @@ void SoundGen::SetCallbacks(std::function<float()> f)
 
 bool SoundGen::onGetData(Chunk& data)
 {
-    amplification = amplification + (( (rand() % 199) -99 ) / 1000.f);
-    amplification = std::max(0.f, std::min(amplification, 1.f));
-    sampleCount = 768 - 128 + (rand() % 36) * 12;
+    //Indirected random walk...
+    targetAmp += (( (rand() % 199) -99 ) / 1000.f);
+    targetAmp = std::max(0.03f, std::min(targetAmp, 0.97f));
+    if (targetAmp > amplification) amplification += 0.02f;
+    else amplification -= 0.02f;
+
+    //Indirected random walk...
+    targetSamples = 624 + getLevel() * 4 * 12;
+    targetSamples += (rand() % 72) * getLevel();
+    sampleCount = targetSamples;
+    if (targetSamples > sampleCount) sampleCount +=96;
+    else sampleCount -=72;
+    
     int num_main_waves = 8;
     int num_harm_waves = 12;
+    int num_saww_waves = 46;
     float main_samples = (float)sampleCount / num_main_waves;
     float harm_samples = (float)sampleCount / num_harm_waves;
+    float saww_samples = (float)sampleCount / num_saww_waves;
     //assert( sampleCount % num_main_waves == 0);
     //assert( sampleCount % num_harm_waves == 0);
     const float TWO_PI = 6.283185307179586476925286766559;
-    const int main_amp = 20000;
-    const int harm_amp = 9000;
+    const int main_amp = 14000;
+    const int harm_amp = 11000;
+    const int saww_amp = 7000;
     int final_main_amp = main_amp * amplification;
-    int final_harm_amp = harm_amp * getModelData();
-
+    int final_harm_amp = harm_amp * getEngine();
+    int final_saww_amp = saww_amp * getHealth();
+    assert(final_main_amp <= main_amp);
+    assert(final_harm_amp <= harm_amp);
+    assert(final_saww_amp <= saww_amp);
+    assert(final_main_amp + final_harm_amp + final_saww_amp < 32001);
+    
     samples.resize(sampleCount);
     for (int i = 0; i<samples.size(); i++) {
         samples[i] =  sin( (i*TWO_PI)/main_samples ) * final_main_amp;
         samples[i] += sin( (i*TWO_PI)/harm_samples ) * final_harm_amp;
+        samples[i] += (abs( fmod(i+saww_samples/2, 2 * saww_samples) - saww_samples ) - saww_samples/2 ) * final_saww_amp / saww_samples;
+        assert(samples[i] < 32000);
+        assert(samples[i] > -32000);
     }
-    std::cout << getModelData() << std::endl;
+    
+    assert(samples[0] < 5000);
+    assert(samples[0] > -5000);
+    assert(samples[samples.size()-1] < 5000);
+    assert(samples[samples.size()-1] > -5000);
+
+    //if (rand() % 50 == 0) 
+    //std::cout << getEngine() << " " << getHealth() << " " << getLevel() << std::endl;
     
     
     
@@ -67,9 +97,9 @@ bool SoundGen::onGetData(Chunk& data)
 
     data.samples = &samples[0];
     data.sampleCount = sampleCount;
-    //for (auto x: samples) {
-    //    std::cout << x << std::endl;
-    //}
-    //std::cout << "ENDENDENDENDEND" << std::endl;
+//    for (auto x: samples) {
+//        std::cout << x << std::endl;
+//    }
+//    std::cout << "ENDENDENDENDEND" << std::endl;
     return true;    
 }

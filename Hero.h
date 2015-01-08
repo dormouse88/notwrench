@@ -13,7 +13,8 @@ public:
 	void Die();
 	void DoStep(sf::FloatRect scr, BoxSeq & boxes);
 	void Draw(sf::RenderTarget & window);
-        float GetAudioModulation() { return (255 - _chromaPower.z) / 255.f; }
+        float GetEngine() { return (255 - _chromaPower.z) / 255.f; }
+        float GetHealth() { return (255 - _chromaPower.x) / 255.f; }
 
 	bool inWinZone;
 private:

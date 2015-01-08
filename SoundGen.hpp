@@ -17,7 +17,7 @@ class SoundGen : public sf::SoundStream
 public:
     SoundGen();
 //    virtual ~SoundGen();
-    void SetCallbacks(std::function<float()> f);
+    void SetCallbacks(std::function<float()> eng, std::function<float()> hea, std::function<int()> lev);
 private:
     virtual bool onGetData(Chunk& data);
 
@@ -25,8 +25,14 @@ private:
 
     unsigned int sampleCount;
     std::vector<sf::Int16> samples;
-    std::function<float()> getModelData;
+    
+    std::function<float()> getEngine;
+    std::function<float()> getHealth;
+    std::function<int()> getLevel;
     float amplification;
+    int targetSamples;
+    float targetAmp;
+    
     
 };
 

@@ -9,6 +9,7 @@ public:
 	LevelPack(void);
 	~LevelPack(void);
 	void NextLevel(Hero&, BoxSeq&);
+        int GetLevel() { return currentLevel; }
 private:
 	unsigned int currentLevel;
 	std::vector<std::string> levelFilenames;

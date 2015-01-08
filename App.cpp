@@ -10,7 +10,7 @@ App::App(void)
 	//window.setFramerateLimit(45);
 
 	levelPack.NextLevel(hero, boxes);
-        soundGen.SetCallbacks(std::bind( &Hero::GetAudioModulation, &hero));
+        soundGen.SetCallbacks(std::bind( &Hero::GetEngine, &hero), std::bind( &Hero::GetHealth, &hero), std::bind( &LevelPack::GetLevel, &levelPack) );
 	Run();
 }
 

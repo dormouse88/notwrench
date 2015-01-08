@@ -83,9 +83,9 @@ void Hero::DoStep(sf::FloatRect scr, BoxSeq & boxes) {
 							if (boxC.r > cell.r) cell.r = 0;
 							else cell.r -= boxC.r;
 							if (boxC.g > cell.g) cell.g = 0;
-							cell.g -= boxC.g;
+							else cell.g -= boxC.g;
 							if (boxC.b > cell.b) cell.b = 0;
-							cell.b -= boxC.b;
+							else cell.b -= boxC.b;
 						}
 						else if (bm == ADD) {
 							cell += boxC;
