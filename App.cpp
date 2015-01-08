@@ -10,6 +10,7 @@ App::App(void)
 	//window.setFramerateLimit(45);
 
 	levelPack.NextLevel(hero, boxes);
+        soundGen.SetCallbacks(std::bind( &Hero::GetAudioModulation, &hero));
 	Run();
 }
 
@@ -18,11 +19,13 @@ App::~App(void)
 
 void App::Run()
 {
+    soundGen.play();
     while (window.isOpen())
     {
-		BaseHandleInput();
-		DoLogicAndDraw();
+        BaseHandleInput();
+        DoLogicAndDraw();
     }
+    soundGen.stop();
 }
 
 void App::DoLogicAndDraw()

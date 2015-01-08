@@ -3,6 +3,7 @@
 #include "Hero.h"
 #include "Box.h"
 #include "LevelPack.h"
+#include "SoundGen.hpp"
 #include <vector>
 
 class App
@@ -19,5 +20,6 @@ private:
 	BoxSeq boxes;
 	Hero hero;
 	LevelPack levelPack;
+        SoundGen soundGen;
 };
 
