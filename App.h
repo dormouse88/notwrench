@@ -16,10 +16,13 @@ public:
 	void BaseHandleInput();
 private:
 	sf::RenderWindow window;
+        sf::RenderTexture preShader;
+        sf::Shader shader;
 	int groove;
 	BoxSeq boxes;
 	Hero hero;
 	LevelPack levelPack;
         SoundGen soundGen;
+        bool quitYet;
 };
 

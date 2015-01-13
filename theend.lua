@@ -25,7 +25,7 @@ hero = {left=300, top=225, width=40, height=30}
 boxes = {
 	--background
 	{ cycle=99, blendmode="OVR", route = {
-		{ time = 0, rect={0,0,640,480}, twolor={90,255} },
+		{ time = 0, rect={0,0,640,480}, twolor={0,255} },
 		}	},
 	--letter pieces ("the end")
 	piece( {col1,row1,lw,ph}, {650,40} ), --#T

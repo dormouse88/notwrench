@@ -32,15 +32,15 @@ void Hero::Die() {
 void Hero::DoStep(sf::FloatRect scr, BoxSeq & boxes) {
     //HANDLE KEYBOARD...
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) )
-		_vel.x -= _engine;
+            _vel.x -= _engine;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) )
-		_vel.x += _engine;
+            _vel.x += _engine;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) )
-        _vel.y -= _engine;
+            _vel.y -= _engine;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) )
-		_vel.y += _engine;
+            _vel.y += _engine;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) )
-        Die();
+            Die();
 
     //APPLY DRAG...
     _vel *= 0.95f;

@@ -58,7 +58,8 @@ void Box::LoadRoute(lua_State * L)
                 if (blendString == ADD)
                     blendMode = sf::BlendMode(sf::BlendMode::Factor::One, sf::BlendMode::Factor::One);
 		else if (blendString == SUB)
-                    blendMode = sf::BlendMode(sf::BlendMode::Factor::Zero, sf::BlendMode::Factor::OneMinusSrcColor, sf::BlendMode::Equation::Add);
+                    blendMode = sf::BlendMode(sf::BlendMode::Factor::Zero, sf::BlendMode::Factor::OneMinusSrcColor, sf::BlendMode::Equation::Add,
+                                              sf::BlendMode::Factor::One, sf::BlendMode::Factor::One, sf::BlendMode::Equation::Add);
 		else
                     blendMode = sf::BlendNone;
 	}

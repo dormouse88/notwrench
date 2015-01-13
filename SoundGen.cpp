@@ -36,9 +36,9 @@ bool SoundGen::onGetData(Chunk& data)
     if (targetAmp > amplification) amplification += 0.02f;
     else amplification -= 0.02f;
 
-    //Indirected random walk...
+    //Indirected randomly set...
     targetSamples = 624 + getLevel() * 4 * 12;
-    targetSamples += (rand() % 72) * getLevel();
+    targetSamples += (rand() % 72) * (getLevel() + 1);
     sampleCount = targetSamples;
     if (targetSamples > sampleCount) sampleCount +=96;
     else sampleCount -=72;
@@ -65,8 +65,8 @@ bool SoundGen::onGetData(Chunk& data)
     
     samples.resize(sampleCount);
     for (int i = 0; i<samples.size(); i++) {
-        samples[i] =  sin( (i*TWO_PI)/main_samples ) * final_main_amp;
-        samples[i] += sin( (i*TWO_PI)/harm_samples ) * final_harm_amp;
+        //samples[i] =  sin( (i*TWO_PI)/main_samples ) * final_main_amp;
+        samples[i] = sin( (i*TWO_PI)/harm_samples ) * final_harm_amp;
         samples[i] += (abs( fmod(i+saww_samples/2, 2 * saww_samples) - saww_samples ) - saww_samples/2 ) * final_saww_amp / saww_samples;
         assert(samples[i] < 32000);
         assert(samples[i] > -32000);
