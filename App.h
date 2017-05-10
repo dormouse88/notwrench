@@ -15,6 +15,7 @@ public:
 	void DoLogicAndDraw();
 	void BaseHandleInput();
 private:
+        void CreateWindow(bool full);
 	sf::RenderWindow window;
         sf::RenderTexture preShader;
         sf::Shader shader;
@@ -24,5 +25,9 @@ private:
 	LevelPack levelPack;
         SoundGen soundGen;
         bool quitYet;
+        bool fullScreen;
+        int soundMult;
+        int blurMult;
+        int jaggyMult;
 };
 
